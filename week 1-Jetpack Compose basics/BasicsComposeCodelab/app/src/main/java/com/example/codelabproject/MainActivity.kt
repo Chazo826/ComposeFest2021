@@ -18,6 +18,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.codelabproject.ui.theme.CodelabProjectTheme
@@ -58,10 +59,11 @@ fun Greeting(name: String) {
     var isExpanded by remember { mutableStateOf(false) }
     val extraPadding by animateDpAsState(
         targetValue = if (isExpanded) 48.dp else 0.dp,
-    animationSpec = spring(
-        dampingRatio = Spring.DampingRatioMediumBouncy,
-        stiffness = Spring.StiffnessLow
-    ))
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessLow
+        )
+    )
     Surface(
         color = MaterialTheme.colors.primary,
         modifier = Modifier.padding(vertical = 4.dp, horizontal = 4.dp)
@@ -73,7 +75,12 @@ fun Greeting(name: String) {
                     .padding(bottom = extraPadding.coerceAtLeast(0.dp))
             ) {
                 Text(text = "Hello")
-                Text(text = name)
+                Text(
+                    text = name,
+                    style = MaterialTheme.typography.h4.copy(
+                        fontWeight = FontWeight.ExtraBold
+                    )
+                )
             }
             OutlinedButton(onClick = {
                 isExpanded = !isExpanded
