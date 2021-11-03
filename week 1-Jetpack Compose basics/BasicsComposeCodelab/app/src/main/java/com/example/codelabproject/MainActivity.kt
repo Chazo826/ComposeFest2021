@@ -3,6 +3,9 @@ package com.example.codelabproject
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -52,8 +55,13 @@ fun Greetings(names: List<String> = List(1000) { "$it" }) {
 
 @Composable
 fun Greeting(name: String) {
-    val isExpanded = remember { mutableStateOf(false) }
-    val extraPadding = if (isExpanded.value) 48.dp else 0.dp
+    var isExpanded by remember { mutableStateOf(false) }
+    val extraPadding by animateDpAsState(
+        targetValue = if (isExpanded) 48.dp else 0.dp,
+    animationSpec = spring(
+        dampingRatio = Spring.DampingRatioMediumBouncy,
+        stiffness = Spring.StiffnessLow
+    ))
     Surface(
         color = MaterialTheme.colors.primary,
         modifier = Modifier.padding(vertical = 4.dp, horizontal = 4.dp)
@@ -62,15 +70,15 @@ fun Greeting(name: String) {
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(bottom = extraPadding)
+                    .padding(bottom = extraPadding.coerceAtLeast(0.dp))
             ) {
                 Text(text = "Hello")
                 Text(text = name)
             }
             OutlinedButton(onClick = {
-                isExpanded.value = !isExpanded.value
+                isExpanded = !isExpanded
             }) {
-                Text(text = if (isExpanded.value) "show less" else "show more")
+                Text(text = if (isExpanded) "show less" else "show more")
             }
         }
     }
