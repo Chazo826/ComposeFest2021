@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             ComposeCodeLab_LayoutTheme {
                 // A surface container using the 'background' color from the theme
-                ImageList()
+                LayoutsCodelab()
             }
         }
     }
@@ -79,16 +79,24 @@ fun LayoutsCodelab() {
             )
         }
     ) { innerPadding ->
-        BodyContent2(Modifier.padding(innerPadding))
+        BodyContent(Modifier.padding(innerPadding))
     }
 }
 
 @Composable
 fun BodyContent(modifier: Modifier = Modifier) {
-    Column(modifier = modifier.padding(8.dp)) {
-        Text(text = "Hi there!")
-        Text(text = "Thanks for going through the Layouts codelab")
+    Row(modifier = modifier.horizontalScroll(rememberScrollState())) {
+        StaggeredGrid {
+            for (topic in topics) {
+                Chip(modifier = Modifier.padding(8.dp), text = topic)
+            }
+        }
     }
+
+//    Column(modifier = modifier.padding(8.dp)) {
+//        Text(text = "Hi there!")
+//        Text(text = "Thanks for going through the Layouts codelab")
+//    }
 }
 
 @Preview
