@@ -79,7 +79,7 @@ fun LayoutsCodelab() {
             )
         }
     ) { innerPadding ->
-        BodyContent(Modifier.padding(innerPadding))
+        DecoupledConstraintLayout()
     }
 }
 
