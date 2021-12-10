@@ -200,7 +200,8 @@ fun PostItem(
         icon = {
             Image(
                 painter = painterResource(post.imageThumbId),
-                contentDescription = null
+                contentDescription = null,
+                modifier = Modifier.clip(shape = MaterialTheme.shapes.small)
             )
         },
         text = {
